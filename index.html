@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Карта звёзд - Резюме команды</title>
     <style>
         * {
@@ -10,25 +10,34 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Arial', sans-serif;
+            touch-action: manipulation;
         }
 
-        body {
+        html, body {
             background: #0a0a1a;
             color: white;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         /* Карта звёзд */
+        .star-map-container {
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+            overflow: auto;
+        }
+
         .star-map {
             position: relative;
-            width: 100%;
-            height: 100vh;
+            width: 200%;
+            height: 200vh;
             background: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2000') no-repeat center center;
             background-size: cover;
             opacity: 0;
             animation: fadeIn 2s ease-in-out forwards;
+            transform-origin: top left;
         }
 
         /* Звёзды */
@@ -43,9 +52,10 @@
             align-items: center;
             font-weight: bold;
             color: #333;
+            z-index: 10;
         }
 
-        .star:hover {
+        .star:hover, .star:active {
             transform: scale(1.1);
             box-shadow: 0 0 20px #ffdd00;
         }
@@ -79,60 +89,70 @@
             align-items: center;
             z-index: 1000;
             animation: fadeIn 0.5s ease-in-out;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .resume-box {
             background: #1a1a2e;
-            padding: 30px;
+            padding: 20px;
             border-radius: 15px;
-            max-width: 600px;
-            width: 90%;
+            max-width: 90%;
+            width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
             border: 2px solid #4CAF50;
             box-shadow: 0 0 20px rgba(0, 255, 100, 0.3);
             text-align: center;
+            margin: 20px;
         }
 
         .resume-box h2 {
             color: #4CAF50;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
         }
 
         .resume-avatar {
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             border: 4px solid #4CAF50;
             object-fit: cover;
-            margin: 0 auto 20px;
+            margin: 0 auto 15px;
             display: block;
         }
 
         .resume-skills {
             list-style: none;
             text-align: left;
-            margin: 20px auto;
-            max-width: 400px;
+            margin: 15px auto;
+            max-width: 100%;
+            padding: 0 10px;
         }
 
         .resume-skills li {
-            margin: 10px 0;
-            padding: 10px;
+            margin: 8px 0;
+            padding: 8px;
             background: rgba(255, 255, 255, 0.1);
             border-left: 4px solid #4CAF50;
+            font-size: 0.9rem;
+            word-break: break-word;
         }
 
         .close-resume {
             background: #4CAF50;
             color: white;
             border: none;
-            padding: 10px 25px;
+            padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 15px;
             transition: background 0.3s;
+            font-size: 1rem;
         }
 
-        .close-resume:hover {
+        .close-resume:hover, .close-resume:active {
             background: #45a049;
         }
 
@@ -147,17 +167,59 @@
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
+
+        /* Мобильная адаптация */
+        @media (max-width: 768px) {
+            .star {
+                width: 50px !important;
+                height: 50px !important;
+                font-size: 0.8rem;
+            }
+            
+            .star-main {
+                width: 70px !important;
+                height: 70px !important;
+            }
+            
+            .resume-box {
+                padding: 15px;
+            }
+            
+            .resume-avatar {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .star {
+                width: 40px !important;
+                height: 40px !important;
+                font-size: 0.7rem;
+            }
+            
+            .star-main {
+                width: 60px !important;
+                height: 60px !important;
+            }
+            
+            .resume-skills li {
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Карта звёзд -->
-    <div class="star-map">
-        <div class="star star-main" onclick="openResume('Илья Олегович')">Илья Олегович</div>
-        <div class="star star-1" onclick="openResume('Никита')">Никита</div>
-        <div class="star star-2" onclick="openResume('Максим')">Максим</div>
-        <div class="star star-3" onclick="openResume('Сергей')">Сергей</div>
-        <div class="star star-4" onclick="openResume('Кирилл')">Кирилл</div>
-        <div class="star star-5" onclick="openResume('Илья')">Илья</div>
+    <div class="star-map-container">
+        <div class="star-map">
+            <div class="star star-main" onclick="openResume('Илья Олегович')">Илья Олегович</div>
+            <div class="star star-1" onclick="openResume('Никита')">Никита</div>
+            <div class="star star-2" onclick="openResume('Максим')">Максим</div>
+            <div class="star star-3" onclick="openResume('Сергей')">Сергей</div>
+            <div class="star star-4" onclick="openResume('Кирилл')">Кирилл</div>
+            <div class="star star-5" onclick="openResume('Илья')">Илья</div>
+        </div>
     </div>
 
     <!-- Модальное окно резюме -->
@@ -175,18 +237,20 @@
         const resumes = {
             "Илья Олегович": {
                 avatar: "https://via.placeholder.com/150?text=Илья+О.",
-                skills: ["Сеньор - Руководитель проекта" ]
+                skills: ["Сеньор - Руководитель проекта"]
             },
             "Никита": {
                 avatar: "TN.jpg",
-                skills: ["🛡️Основы ЗИ🛡️ - Нет коммерческого опыта в инфобезе, но понимаю принципы кибербезопасности и базовые механизмы защиты)",
-                "🐧Linux🐧 - Уверенный пользователь, начинающий администратор (ориентируюсь в каталогах и знаю базовые команды) имеется опыт автоматизации на Bash",
-                "📡Сети📡 - Уверенные знания в сетях, имеется опыт администрирования.", 
-                "🗺️Континент🗺️ - Имею представление как работает, практического кейса не имею", 
-                "❇️DLP❇️ - Теоретический уровень, имею представление, практически не администрировал подобные средства", 
-                "⌨️Скрипты⌨️ - PShell плохое понимание, Bash - Базовое использование как уверенный пользователь",
-                "🐍Питон🐍 - уровень калькулятор",
-                "⚠️Виртуализация⚠️ - уверенный юзер программных средств Горизонт, VMware, ALT, но менее уверенный при разворачивании самого программного средства"]
+                skills: [
+                    "🛡️Основы ЗИ🛡️ - Нет коммерческого опыта в инфобезе, но понимаю принципы кибербезопасности и базовые механизмы защиты",
+                    "🐧Linux🐧 - Уверенный пользователь, начинающий администратор (ориентируюсь в каталогах и знаю базовые команды) имеется опыт автоматизации на Bash",
+                    "📡Сети📡 - Уверенные знания в сетях, имеется опыт администрирования.", 
+                    "🗺️Континент🗺️ - Имею представление как работает, практического кейса не имею", 
+                    "❇️DLP❇️ - Теоретический уровень, имею представление, практически не администрировал подобные средства", 
+                    "⌨️Скрипты⌨️ - PShell плохое понимание, Bash - Базовое использование как уверенный пользователь",
+                    "🐍Питон🐍 - уровень калькулятор",
+                    "⚠️Виртуализация⚠️ - уверенный юзер программных средств Горизонт, VMware, ALT, но менее уверенный при разворачивании самого программного средства"
+                ]
             },
             "Максим": {
                 avatar: "https://via.placeholder.com/150?text=Максим",
@@ -217,18 +281,29 @@
             const skillsList = document.getElementById("resumeSkills");
             skillsList.innerHTML = "";
             resume.skills.forEach(skill => {
-                const li = document.createElement("li");
-                li.textContent = skill;
-                skillsList.appendChild(li);
+                if (skill.trim() !== "") {
+                    const li = document.createElement("li");
+                    li.textContent = skill;
+                    skillsList.appendChild(li);
+                }
             });
 
             modal.style.display = "flex";
+            document.body.style.overflow = "hidden";
         }
 
         // Закрытие резюме
         function closeResume() {
             document.getElementById("resumeModal").style.display = "none";
+            document.body.style.overflow = "auto";
         }
+
+        // Обработка касаний для мобильных устройств
+        document.addEventListener('touchmove', function(e) {
+            if (document.getElementById("resumeModal").style.display === "flex") {
+                e.preventDefault();
+            }
+        }, { passive: false });
     </script>
 </body>
 </html>
