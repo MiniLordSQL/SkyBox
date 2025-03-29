@@ -17,27 +17,28 @@
             background: #0a0a1a;
             color: white;
             width: 100%;
-            min-height: 100vh;
-            overflow-x: hidden;
+            height: 100%;
+            overflow: hidden;
         }
 
         /* Карта звёзд */
         .star-map-container {
             width: 100%;
-            min-height: 100vh;
+            height: 100vh;
             position: relative;
-            overflow: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .star-map {
             position: relative;
-            width: 200%;
-            height: 200vh;
+            width: 100%;
+            height: 100%;
             background: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2000') no-repeat center center;
             background-size: cover;
             opacity: 0;
             animation: fadeIn 2s ease-in-out forwards;
-            transform-origin: top left;
         }
 
         /* Звёзды */
@@ -53,6 +54,7 @@
             font-weight: bold;
             color: #333;
             z-index: 10;
+            text-align: center;
         }
 
         .star:hover, .star:active {
@@ -60,7 +62,7 @@
             box-shadow: 0 0 20px #ffdd00;
         }
 
-        /* Главная звезда (Илья Олегович) */
+        /* Компактное расположение звёзд */
         .star-main {
             width: 100px;
             height: 100px;
@@ -69,12 +71,11 @@
             transform: translateX(-50%);
         }
 
-        /* Остальные звёзды */
-        .star-1 { width: 60px; height: 60px; top: 40%; left: 30%; }
-        .star-2 { width: 60px; height: 60px; top: 40%; left: 70%; }
-        .star-3 { width: 60px; height: 60px; top: 60%; left: 20%; }
-        .star-4 { width: 60px; height: 60px; top: 60%; left: 50%; }
-        .star-5 { width: 60px; height: 60px; top: 60%; left: 80%; }
+        .star-1 { width: 70px; height: 70px; top: 45%; left: 25%; }
+        .star-2 { width: 70px; height: 70px; top: 45%; left: 75%; }
+        .star-3 { width: 60px; height: 60px; top: 70%; left: 15%; }
+        .star-4 { width: 60px; height: 60px; top: 70%; left: 50%; transform: translateX(-50%); }
+        .star-5 { width: 60px; height: 60px; top: 70%; left: 85%; }
 
         /* Модальное окно с резюме */
         .resume-modal {
@@ -94,8 +95,9 @@
         }
 
         .resume-box {
+            position: relative;
             background: #1a1a2e;
-            padding: 20px;
+            padding: 30px;
             border-radius: 15px;
             max-width: 90%;
             width: 600px;
@@ -107,36 +109,52 @@
             margin: 20px;
         }
 
+        /* Крестик для закрытия (виден только на мобильных) */
+        .close-btn-mobile {
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
         .resume-box h2 {
             color: #4CAF50;
-            margin-bottom: 15px;
-            font-size: 1.5rem;
+            margin-bottom: 20px;
         }
 
         .resume-avatar {
-            width: 120px;
-            height: 120px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             border: 4px solid #4CAF50;
             object-fit: cover;
-            margin: 0 auto 15px;
+            margin: 0 auto 20px;
             display: block;
         }
 
         .resume-skills {
             list-style: none;
             text-align: left;
-            margin: 15px auto;
+            margin: 20px auto;
             max-width: 100%;
-            padding: 0 10px;
+            padding: 0 15px;
         }
 
         .resume-skills li {
-            margin: 8px 0;
-            padding: 8px;
+            margin: 10px 0;
+            padding: 10px;
             background: rgba(255, 255, 255, 0.1);
             border-left: 4px solid #4CAF50;
-            font-size: 0.9rem;
             word-break: break-word;
         }
 
@@ -144,12 +162,11 @@
             background: #4CAF50;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 25px;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 15px;
+            margin-top: 20px;
             transition: background 0.3s;
-            font-size: 1rem;
         }
 
         .close-resume:hover, .close-resume:active {
@@ -160,12 +177,6 @@
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
         }
 
         /* Мобильная адаптация */
@@ -182,13 +193,22 @@
             }
             
             .resume-box {
-                padding: 15px;
+                padding: 25px 15px;
             }
             
             .resume-avatar {
-                width: 100px;
-                height: 100px;
+                width: 120px;
+                height: 120px;
             }
+            
+            .close-btn-mobile {
+                display: block;
+            }
+            
+            /* Ещё более компактное расположение для мобильных */
+            .star-main { top: 15%; }
+            .star-1, .star-2 { top: 40%; }
+            .star-3, .star-4, .star-5 { top: 65%; }
         }
 
         @media (max-width: 480px) {
@@ -204,7 +224,13 @@
             }
             
             .resume-skills li {
-                font-size: 0.8rem;
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+            
+            .resume-avatar {
+                width: 100px;
+                height: 100px;
             }
         }
     </style>
@@ -224,6 +250,7 @@
 
     <!-- Модальное окно резюме -->
     <div class="resume-modal" id="resumeModal">
+        <button class="close-btn-mobile" id="mobileCloseBtn">×</button>
         <div class="resume-box">
             <h2 id="resumeName">Резюме</h2>
             <img src="https://via.placeholder.com/150" alt="Фото" class="resume-avatar" id="resumeAvatar">
@@ -298,12 +325,22 @@
             document.body.style.overflow = "auto";
         }
 
-        // Обработка касаний для мобильных устройств
-        document.addEventListener('touchmove', function(e) {
-            if (document.getElementById("resumeModal").style.display === "flex") {
-                e.preventDefault();
+        // Закрытие по крестику на мобильных
+        document.getElementById("mobileCloseBtn").addEventListener("click", closeResume);
+
+        // Определение устройства
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // Автоматическое центрирование звёзд при загрузке
+        window.addEventListener('load', function() {
+            if (!isMobile()) {
+                // На компьютере - центрируем звёзды без необходимости прокрутки
+                const container = document.querySelector('.star-map-container');
+                container.style.overflow = 'hidden';
             }
-        }, { passive: false });
+        });
     </script>
 </body>
 </html>
